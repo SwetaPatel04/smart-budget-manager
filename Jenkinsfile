@@ -16,16 +16,16 @@ pipeline {
             steps {
                 echo 'Installing Python dependencies...'
                 sh '''
-                    pip install flask
-                    pip install flask-sqlalchemy
-                    pip install flask-jwt-extended
-                    pip install flask-bcrypt
-                    pip install scikit-learn
-                    pip install pandas
-                    pip install numpy
-                    pip install python-dotenv
-                    pip install pytest
-                    pip install pytest-flask
+                    pip install flask --break-system-packages
+                    pip install flask-sqlalchemy --break-system-packages
+                    pip install flask-jwt-extended --break-system-packages
+                    pip install flask-bcrypt --break-system-packages
+                    pip install scikit-learn --break-system-packages
+                    pip install pandas --break-system-packages
+                    pip install numpy --break-system-packages
+                    pip install python-dotenv --break-system-packages
+                    pip install pytest --break-system-packages
+                    pip install pytest-flask --break-system-packages
                 '''
                 echo 'Python dependencies installed! ✅'
             }
