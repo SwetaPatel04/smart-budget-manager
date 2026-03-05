@@ -170,7 +170,7 @@
         <h1>💰 Smart Budget Manager</h1>
         <div>
             <span id="nav-username" style="margin-right:15px; font-size:14px;"></span>
-            <button onclick="logout()">Logout</button>
+            <button id="logout-btn" onclick="logout()">Logout</button>
         </div>
     </nav>
 
@@ -190,9 +190,9 @@
                     <label>Password</label>
                     <input type="password" id="login-password" placeholder="••••••••">
                 </div>
-                <button class="btn btn-primary" onclick="login()">Login</button>
+                <button id="login-btn" class="btn btn-primary" onclick="login()">Login</button>
                 <div class="auth-switch">
-                    Don't have an account? <a onclick="showRegister()">Register here</a>
+                    Don't have an account? <a id="show-register" onclick="showRegister()">Register here</a>
                 </div>
             </div>
         </div>
@@ -215,7 +215,7 @@
                     <label>Password</label>
                     <input type="password" id="reg-password" placeholder="••••••••">
                 </div>
-                <button class="btn btn-primary" onclick="register()">Register</button>
+                <button id="register-btn" class="btn btn-primary" onclick="register()">Register</button>
                 <div class="auth-switch">
                     Already have an account? <a onclick="showLogin()">Login here</a>
                 </div>
@@ -271,7 +271,7 @@
                         <label>Description (optional)</label>
                         <input type="text" id="exp-description" placeholder="Optional details">
                     </div>
-                    <button class="btn btn-primary" onclick="addExpense()">Add Expense</button>
+                    <button id="add-expense-btn" class="btn btn-primary" onclick="addExpense()">Add Expense</button>
                 </div>
 
                 <!-- Chart -->

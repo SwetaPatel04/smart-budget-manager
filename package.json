@@ -1,0 +1,27 @@
+{
+  "name": "smart-budget-manager",
+  "version": "1.0.0",
+  "description": "Full-stack budget tracking app with ML predictions, Flask REST API, Playwright tests, Jenkins CI/CD, and Azure deployment",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SwetaPatel04/smart-budget-manager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/SwetaPatel04/smart-budget-manager/issues"
+  },
+  "homepage": "https://github.com/SwetaPatel04/smart-budget-manager#readme",
+  "dependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}
