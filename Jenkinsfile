@@ -43,17 +43,22 @@ pipeline {
             steps {
                 echo 'Installing Playwright...'
                 sh '''
+                    export PATH=/var/jenkins_home/.npm-global/bin:$PATH
+                    npm config set prefix '/var/jenkins_home/.npm-global'
                     npm install @playwright/test
                     npx playwright install chromium
                 '''
                 echo 'Playwright installed! ✅'
             }
         }
-
+        
         stage('Run Playwright Tests') {
             steps {
                 echo 'Running Playwright E2E tests...'
-                sh 'npx playwright test --project=chromium'
+                sh '''
+                    export PATH=/var/jenkins_home/.npm-global/bin:$PATH
+                    npx playwright test --project=chromium
+                '''
                 echo 'Playwright tests complete! ✅'
             }
         }
