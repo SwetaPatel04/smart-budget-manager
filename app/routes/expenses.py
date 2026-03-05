@@ -11,7 +11,7 @@ expenses_bp = Blueprint('expenses', __name__)
 @jwt_required()
 def add_expense():
     data = request.get_json()
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # Validate required fields
     if not data or not data.get('title') or not data.get('amount') or not data.get('category'):
@@ -44,7 +44,7 @@ def add_expense():
 @expenses_bp.route('/', methods=['GET'])
 @jwt_required()
 def get_expenses():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # Get optional filters from query params
     category = request.args.get('category')
@@ -69,7 +69,7 @@ def get_expenses():
 @expenses_bp.route('/<int:expense_id>', methods=['GET'])
 @jwt_required()
 def get_expense(expense_id):
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # Find expense and verify it belongs to current user
     expense = Expense.query.filter_by(
@@ -87,7 +87,7 @@ def get_expense(expense_id):
 @expenses_bp.route('/<int:expense_id>', methods=['PUT'])
 @jwt_required()
 def update_expense(expense_id):
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     data = request.get_json()
     
     # Find expense and verify it belongs to current user
@@ -122,7 +122,7 @@ def update_expense(expense_id):
 @expenses_bp.route('/<int:expense_id>', methods=['DELETE'])
 @jwt_required()
 def delete_expense(expense_id):
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # Find expense and verify it belongs to current user
     expense = Expense.query.filter_by(
@@ -144,7 +144,7 @@ def delete_expense(expense_id):
 @expenses_bp.route('/summary', methods=['GET'])
 @jwt_required()
 def get_summary():
-    user_id = get_jwt_identity()
+    user_id = int(get_jwt_identity())
     
     # Get all expenses for current user
     expenses = Expense.query.filter_by(user_id=user_id).all()
@@ -166,4 +166,36 @@ def get_summary():
         'total_expenses': len(expenses),
         'total_amount': round(total, 2),
         'by_category': by_category
+    }), 200
+
+# ── ML PREDICTIONS ───────────────────────────────────────
+@expenses_bp.route('/predictions', methods=['GET'])
+@jwt_required()
+def get_predictions():
+    from app.ml.predictor import predictor
+    user_id = int(get_jwt_identity())
+    
+    # Get all expenses for current user
+    expenses = Expense.query.filter_by(user_id=user_id).order_by(Expense.date.asc()).all()
+    
+    if not expenses:
+        return jsonify({'message': 'Add more expenses to get predictions!'}), 200
+    
+    # Train model on user data
+    predictor.train(expenses)
+    
+    # Get predictions and insights
+    predicted_next_month = predictor.predict_next_month(expenses)
+    category_insights = predictor.get_category_insights(expenses)
+    recommendations = predictor.get_budget_recommendations(expenses)
+    
+    # Current month total
+    current_total = sum(e.amount for e in expenses)
+    
+    return jsonify({
+        'current_total_spending': round(current_total, 2),
+        'predicted_next_month': predicted_next_month,
+        'category_insights': category_insights,
+        'recommendations': recommendations,
+        'total_expenses_analysed': len(expenses)
     }), 200
