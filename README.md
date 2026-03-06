@@ -5,6 +5,12 @@ Machine Learning predictions, automated testing, and complete CI/CD pipeline.
 
 ## 🌐 Deployment
 Successfully deployed to Microsoft Azure Web Apps using GitHub Actions CI/CD pipeline.
+
+### ☁️ Azure Deployment
+![Azure Portal](azure-portal.png)
+
+### ✅ GitHub Actions
+![GitHub Actions](github-actions-success.png)
 ---
 
 ## 📸 Screenshots
