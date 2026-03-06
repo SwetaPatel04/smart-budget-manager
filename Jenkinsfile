@@ -49,8 +49,12 @@ pipeline {
 
         stage('Run Playwright Tests') {
             steps {
-                echo 'Running Playwright E2E tests...'
-                sh 'npx playwright test --project=chromium'
+                echo 'Starting Flask app and running Playwright E2E tests...'
+                sh '''
+                    python run.py &
+                    sleep 5
+                    npx playwright test --project=chromium
+                '''
                 echo 'Playwright tests complete! ✅'
             }
         }
